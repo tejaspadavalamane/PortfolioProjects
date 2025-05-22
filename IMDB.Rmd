@@ -1,0 +1,324 @@
+---
+title: "FinalProject_IMDB"
+author: "Adithya Daine Manjunath, Charan Ashwath, Tejas Padavalamane"
+date: "2023-11-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##  Packages
+
+```{r message=FALSE}
+library(tidyverse)
+library(ggplot2) 
+library(tigerstats) 
+library(reticulate)
+library(MASS)
+library(MLmetrics)
+library(dplyr)
+```
+## R Markdown
+
+```{r}
+IMDB_data <- read.csv("~/Downloads/Movie Ratings.csv", sep=",")
+view(IMDB_data)
+summary(IMDB_data)
+```
+
+# Data Preparation: Show the information of the dataset. E.g.# of observations, # of attributes, data types, missing values, etc.
+
+##Obsrvations
+```{r}
+dim(IMDB_data)
+```
+> Here, we can see that the IMDB movie dataset has 562 rows and 6 columns.
+
+##Attributes
+```{r}
+print("IMDB Data")
+str(IMDB_data)
+```
+> The str() function is used to obtain the structure of the selected dataset, in this case the IMDB dataset.
+
+##Null values
+```{r}
+#head(IMDB_data)
+#tail(IMDB_data)
+#summary(IMDB_data)
+#colnames(IMDB_data)[colSums(is.na(IMDB_data)) > 0]
+#is.na(IMDB_data)
+sum(is.na(IMDB_data))
+#colSums(is.na(IMDB_data))
+```
+> There are no null values
+
+
+##Mean, Minimum and Maximum Critics Rating
+```{r}
+mean(IMDB_data$Rotten.Tomatoes.Ratings..)
+min(IMDB_data$Rotten.Tomatoes.Ratings..)
+max(IMDB_data$Rotten.Tomatoes.Ratings..)
+```
+> The average ratings provided by the critics is 47.40 with a minimum of 0 and a maximum of 97.
+
+##Mean, Minimum and Maximum Audience Rating
+```{r}
+mean(IMDB_data$Audience.Ratings..)
+min(IMDB_data$Audience.Ratings..)
+max(IMDB_data$Audience.Ratings..)
+```
+> The average ratings provided by the audience is 58.83 with a minimum of 0 and a maximum of 96.
+
+##Histogram, Histogram Overlay, Barplot, Barplot Overlay, Boxplot
+
+#HISTOGRAM
+```{r}
+#HISTOGRAM Year of Release
+maxpotints <- max(IMDB_data$Year.of.release)
+minpoints <- min(IMDB_data$Year.of.release)
+
+#
+hist(IMDB_data$Year.of.release,breaks = seq(minpoints,maxpotints,l=10), col = "blue", main = "Histogram of number of Release",xlab="Year")
+
+movies_per_year <- table(IMDB_data$Year.of.release)
+movies_per_year
+```
+> From the above histogram representation, we can see that we have obtained the dataset of the IMDB spanning from the year 2007 to 2011. As you can see, there were more movies released in the year 2008 and less movies were released in the year 2007.
+
+#HISTOGRAM WITH OVERLAY
+```{r}
+#
+#ggplot(IMDB_data) +
+#geom_histogram(mapping = aes(x = Year.of.release),bins = 10)
+
+#HISTOGRAM WITH OVERLAY
+ggplot(IMDB_data, aes(x = Year.of.release)) +
+geom_histogram(aes(fill = Genre),bins = 10, color = "black")
+
+movies_per_genre_year <- table(IMDB_data$Year.of.release, IMDB_data$Genre)
+movies_per_genre_year
+```
+> This graph provides the representation of the number of movies released each year with respect to the genres. From this, we can find that the "Comedy" genre has the most releases and the "Romance" genre has the least releases.
+
+```{r}
+ggplot(IMDB_data, aes(x = Budget..million...)) +
+geom_histogram(aes(fill = Genre),bins = 30, color = "black")
+
+#total_budget_per_genre_year <- aggregate(Budget..million... ~ Genre + Year.of.release, data = IMDB_data, sum)
+#total_budget_per_genre_year
+
+#PARAMETERS
+total_budget_per_genre <- aggregate(Budget..million... ~ Genre, data = IMDB_data, sum)
+least_budget_genre <- total_budget_per_genre[which.min(total_budget_per_genre$Budget..million...), ]
+most_budget_genre <- total_budget_per_genre[which.max(total_budget_per_genre$Budget..million...), ]
+
+
+total_budget_per_genre
+least_budget_genre
+most_budget_genre
+```
+> From the above graph, we can conclude that most of the movies have a budget of around a million to 40 million.
+We can also find out that it takes more budget to make an Action movies (From the representation, only the Action genre has spent around 300M budget) when compared to any other genre.
+
+```{r}
+ggplot(IMDB_data, aes(x = Rotten.Tomatoes.Ratings..)) +
+geom_histogram(aes(fill = Genre),bins = 30, color = "black")
+```
+> The above histogram overlay represents the Critics Rating with respect to each and every genre. 
+
+```{r}
+ggplot(IMDB_data, aes(x = Audience.Ratings..)) +
+geom_histogram(aes(fill = Genre),bins = 20, color = "black")
+
+#ggplot(data=IMDB_data,aes(x=Budget..million...)) + geom_histogram(binwidth=10,color='black',aes(fill = Genre))+ facet_grid(Genre~.,scales = 'free')
+```
+> The above histogram overlay shows the audience rating. From the representation, we can say that it is normally distributed.
+
+#BOXPLOT
+```{r}
+#BOXPLOT
+#boxplot(IMDB_data$Year.of.release, horizontal = FALSE,col = "green")
+
+par(mfrow=c(1,2))
+boxplot(IMDB_data$Budget..million..., horizontal = FALSE,col = "yellow")
+abline(h=min(IMDB_data$Budget..million...), col="Blue")
+abline(h=max(IMDB_data$Budget..million...), col="purple")
+abline(h=median(IMDB_data$Budget..million...), col="darkgreen")
+abline(h=quantile(IMDB_data$Budget..million...,c(0.25,0.75)), col="red")
+
+#BOXPLOT OF GENRE AND YEAR OF RELEASE
+#ggplot(IMDB_data, aes(y = Year.of.release, x = Genre)) +
+  #geom_boxplot()
+
+#BOXPLOT OF GENRE AND CRITICS RATING
+#ggplot(IMDB_data, aes(y = Rotten.Tomatoes.Ratings.., x = Genre)) +
+#geom_boxplot()
+
+#BOXPLOT OF GENRE AND AUDIENCE RATING
+#ggplot(IMDB_data, aes(y = Audience.Ratings.., x = Genre)) +
+#geom_boxplot()
+```
+> the graph above is boxplot overlay which shows the minimum, maximum and average money spent on movies.we can clearly see that minimum money spent on the movie is less than a million and maximum money spent on the movie is 300 million and overall average budget spent to make movies is around 40 million.
+
+#BARPLOT
+```{r}
+#BARPLOT
+ggplot(IMDB_data) +
+geom_bar(mapping = aes(x = Year.of.release))
+```
+
+#BARPLOT WITH OVERLAY
+```{r}
+#BARPLOT WITH OVERLAY
+ggplot(IMDB_data, aes(x = Genre)) +
+geom_bar(aes(fill = Genre), color = "black")
+
+genre_counts <- table(IMDB_data$Genre)
+genre_counts
+```
+> The above barplot shows the representation of the number of movies released per genre. Here, we can see that the "Comedy" genre has the most releases with around 170 movies between the years 2007 to 2011. THe genre "romance" has the least releases with less that 25 releases between the same timeframe.
+
+# Data Analysis
+
+## a Hypothesis Testing: Construct a hypothesis testing with null and alternative hypotheses. Use the appropriate test to get the conclusion.
+
+#HYPOTHESIS TESTING
+```{r}
+#HYPOTHESIS TESTING
+comedy <- filter(IMDB_data, Genre == "Comedy")  
+drama <- filter(IMDB_data, Genre == "Drama")
+t.test(comedy$Rotten.Tomatoes.Ratings.., drama$Rotten.Tomatoes.Ratings..)
+
+
+# Extract ratings by genre
+comedy_ratings <- IMDB_data %>% 
+  filter(Genre == "Comedy") %>%
+  pull(Audience.Ratings..)
+
+drama_ratings <- IMDB_data %>%
+  filter(Genre == "Drama") %>% 
+  pull(Audience.Ratings..)
+
+# Perform two-sample t-test
+t.test(comedy_ratings, drama_ratings, 
+       alternative = "greater", 
+       var.equal = FALSE)
+```
+
+
+```{r}
+#Performing a Two-Sample T-test:
+comedy <- filter(IMDB_data, Genre == "Comedy")  
+drama <- filter(IMDB_data, Genre == "Drama")
+#t.test(comedy$Rotten.Tomatoes.Ratings.., drama$Rotten.Tomatoes.Ratings..)
+
+mean(comedy$Rotten.Tomatoes.Ratings..)
+mean(drama$Rotten.Tomatoes.Ratings..)
+
+# State hypotheses
+
+#NULL HYPOTHESIS
+H0 <- mean(comedy$Rotten.Tomatoes.Ratings..) == mean(drama$Rotten.Tomatoes.Ratings..)
+
+#ALTERNATIVE HYPOTHESIS
+H1 <- mean(comedy$Rotten.Tomatoes.Ratings..) != mean(drama$Rotten.Tomatoes.Ratings..)
+
+# Perform t-test
+t.test(comedy$Rotten.Tomatoes.Ratings.., drama$Rotten.Tomatoes.Ratings..)
+
+```
+> The p-value in this case is 0.0003467, which is less than 0.05. As a result, we reject the null hypothesis.
+The alternate theory is correct. The average rating difference between comedy and drama films is statistically significant, with dramas receiving higher ratings.
+
+#SIMPLE LINEAR REGRESSION
+```{r}
+#SIMPLE LINEAR REGRESSION
+lm_model <- lm(Audience.Ratings.. ~ Genre, data = IMDB_data)
+summary(lm_model)
+```
+##To predict estimated audience ratings for genre_drama
+```{r}
+new <- data.frame(Genre="Drama")
+predict(lm_model,new)
+```
+# To Predict Confidence interval
+```{r}
+predict(lm_model, new, interval = "confidence")
+```
+#To Predict Prediction Interval
+```{r}
+predict(lm_model, new, interval = "confidence")
+```
+#SPLIT THE Original DATASET INTO TWO FOR PROBABILITY
+```{r}
+DataSet <- sample(2, nrow(IMDB_data), replace = TRUE, prob=c(0.8, 0.2))
+IMDB_Training <- IMDB_data[DataSet == 1,]
+IMDB_Test <- IMDB_data[DataSet == 2,]
+dim(IMDB_Training)
+dim(IMDB_Test)
+```
+#MULTIPLE LINEAR REGRESSION
+```{r}
+
+#MULTIPLE LINEAR REGRESSION
+ IMDB_data$Genre <- as.factor(IMDB_data$Genre)
+MLR <- lm(Audience.Ratings.. ~ Rotten.Tomatoes.Ratings.. + Budget..million... + Genre, data = IMDB_Training)
+summary(MLR)
+```
+#Prediction
+```{r}
+pred <- predict(object=MLR,newdata = IMDB_Test)
+summary(pred)
+```
+##MULTIPLE LINEAR REGRESSION MAE and MSE
+```{r}
+library(MLmetrics)
+MAE(y_pred = pred, y_true = IMDB_Test$Audience.Ratings..)
+MSE(y_pred = pred, y_true = IMDB_Test$Audience.Ratings..)
+```
+
+
+#Forward selection
+```{r}
+library(MASS)
+ 
+i <- lm( Audience.Ratings..~ 1, data=IMDB_Training)
+IMDB_data$Genre <- as.factor(IMDB_data$Genre)
+all <- lm(Audience.Ratings..~Rotten.Tomatoes.Ratings.. + Budget..million... + Genre + Year.of.release, data=IMDB_Training)
+forward <- stepAIC(i, direction = 'forward' ,scope=formula(all))
+forward$anova
+summary(forward)
+```
+#Forward selection MAE and MSE
+```{r}
+pred_forward <-predict(object = forward, newdata = IMDB_Test)
+MAE(y_pred = pred_forward, y_true = IMDB_Test$Audience.Ratings..)
+MSE(y_pred = pred_forward, y_true = IMDB_Test$Audience.Ratings..)
+```
+
+#Backward selection
+```{r}
+backward <- stepAIC (all, direction='backward')
+backward$anova
+summary(backward)
+```
+#Backward selection MAE and MSE
+```{r}
+pred_backward <-predict(object = backward, newdata = IMDB_Test)
+MAE(y_pred = pred_backward, y_true = IMDB_Test$Audience.Ratings..)
+MSE(y_pred = pred_backward, y_true = IMDB_Test$Audience.Ratings..)
+```
+#Both direction
+```{r}
+both <- stepAIC (i, direction='both',scope = formula(all),trace = 0)
+both$anova
+summary(both)
+```
+#Both direction MAE and MSE
+```{r}
+pred_both <-predict(object = both, newdata = IMDB_Test)
+MAE(y_pred = pred_both, y_true = IMDB_Test$Audience.Ratings..)
+MSE(y_pred = pred_both, y_true = IMDB_Test$Audience.Ratings..)
+```
