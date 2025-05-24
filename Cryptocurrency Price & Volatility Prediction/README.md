@@ -1,13 +1,13 @@
-# 📈 Cryptocurrency Price and Volatility Prediction 
+# 📈 Cryptocurrency Price and Volatility Prediction using Python
 
 ## Overview
-This project focuses on analyzing and predicting the price and volatility of cryptocurrencies using statistical and machine learning models. It leverages historical OHLCV (Open, High, Low, Close, Volume) data from Bitcoin, Ethereum, and Solana to model market behavior and assess forecasting accuracy.
+This project analyzes and forecasts cryptocurrency market behavior using historical OHLCV data. It applies statistical models and machine learning algorithms to assess both price trends and volatility for risk-aware decision-making.
 
 ## 🔍 Objectives
-- Analyze historical trading data of major cryptocurrencies
-- Model and predict price volatility using statistical and ML methods
-- Compare baseline and advanced models to evaluate performance
-- Provide actionable insights for risk-aware decision-making in crypto markets
+- Perform time series analysis on Bitcoin, Ethereum, and Litecoin
+- Predict price movements and volatility using GARCH and LSTM
+- Evaluate model performance using RMSE, RMSPE
+- Generate insights for traders and analysts in crypto finance
 
 ## 📊 Datasets
 - **Cryptos Used**: Bitcoin (BTC), Ethereum (ETH), Litecoin (LTC)
@@ -23,21 +23,38 @@ This project focuses on analyzing and predicting the price and volatility of cry
   - Machine Learning: LSTM neural networks for deep pattern learning
 - **Evaluation Metrics**: RMSE, RMSPE
 
-## 📁 Files Included
-- `abc.csv`, `BTCUSDT.csv`, `ETHUSDT.csv`, `LTCUSDT.csv`: Cryptocurrency OHLCV datasets
-- `Preprocess.csv`: Cleaned/preprocessed data
-- `price prediction.ipynb`: Python notebook for modeling & visualization
-- `btpre.py`: Python script for preprocessing
-- `Volatility Prediction.pdf`: Final project report
-- `group 930.pptx`: Presentation slides
+## 📁 Project Structure
+
+cryptocurrency-volatility-prediction/
+│
+├── data/
+│   ├── BTCUSDT.csv
+│   ├── ETHUSDT.csv
+│   ├── LTCUSDT.csv
+│   └── Preprocess.csv
+│
+├── notebooks/
+│   ├── price_prediction.ipynb
+│   └── volatility_prediction.ipynb   
+│
+├── scripts/
+│   └── btpre.py
+│
+├── docs/
+│   ├── Project_Report.pdf
+│   ├── Presentation_Slides.pptx
+│   ├── Price_Prediction.pdf          
+│   └── Volatility_Prediction.pdf     
+│
+└── README.md
 
 ## 📌 Key Takeaways
-- Cryptocurrency markets are highly volatile and influenced by sentiment, news, and global factors
-- GARCH and LSTM models can capture volatility patterns effectively
-- Insights support traders in making data-informed decisions
+- Volatility in crypto markets shows strong temporal clustering
+- GARCH models outperform baselines in short-term volatility forecasting
+- LSTM models show potential for capturing complex nonlinear patterns
+- Analytical results inform data-backed crypto trading strategies
 
 ## 👨‍💻 Tech Stack
-- Python, Jupyter Notebook
-- Pandas, NumPy, Matplotlib, Seaborn
-- `statsmodels` (for GARCH), TensorFlow/Keras (for LSTM)
-- GitHub for version control and collaboration
+- **Languages**: Python
+- **Libraries**: Pandas, NumPy, Matplotlib, Seaborn, `statsmodels`, TensorFlow/Keras
+- **Tools**: Jupyter Notebook, Git/GitHub
