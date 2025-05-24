@@ -26,27 +26,27 @@ This project analyzes and forecasts cryptocurrency market behavior using histori
 ## 📁 Project Structure
 
 cryptocurrency-volatility-prediction/
-│
-data/
+
+>data/
     BTCUSDT.csv
     ETHUSDT.csv
     LTCUSDT.csv
     Preprocess.csv
 
-notebooks/
+>notebooks/
     price_prediction.ipynb
     volatility_prediction.ipynb 
     
-scripts/
+>scripts/
     btpre.py
     
- docs/
+ >docs/
     Project_Report.pdf
     Presentation_Slides.pptx
     Price_Prediction.pdf          
     Volatility_Prediction.pdf     
 
- README.md
+ >README.md
 
 ## 📌 Key Takeaways
 - Volatility in crypto markets shows strong temporal clustering
