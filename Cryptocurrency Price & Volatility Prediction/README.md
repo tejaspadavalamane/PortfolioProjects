@@ -1,21 +1,21 @@
-# 📈 Cryptocurrency Price and Volatility Prediction using Python
+# Cryptocurrency Price and Volatility Prediction using Python
 
 ## Overview
 This project analyzes and forecasts cryptocurrency market behavior using historical OHLCV data. It applies statistical models and machine learning algorithms to assess both price trends and volatility for risk-aware decision-making.
 
-## 🔍 Objectives
+## Objectives
 - Perform time series analysis on Bitcoin, Ethereum, and Litecoin
 - Predict price movements and volatility using GARCH and LSTM
 - Evaluate model performance using RMSE, RMSPE
 - Generate insights for traders and analysts in crypto finance
 
-## 📊 Datasets
+## Datasets
 - **Cryptos Used**: Bitcoin (BTC), Ethereum (ETH), Litecoin (LTC)
 - **Format**: CSV with OHLCV structure
 - **Source**: Multiple exchanges
 - **Timeframe**: Multi-year historical coverage
 
-## 🧪 Methodology
+## Methodology
 - **Exploration & Preprocessing**: Visualizations, return calculations, log returns, stationarity checks
 - **Volatility Modeling**:
   - Baseline Models (Average, Random Walk)
@@ -23,7 +23,7 @@ This project analyzes and forecasts cryptocurrency market behavior using histori
   - Machine Learning: LSTM neural networks for deep pattern learning
 - **Evaluation Metrics**: RMSE, RMSPE
 
-## 📁 Project Structure
+## Project Structure
 
 cryptocurrency-volatility-prediction/
 
@@ -48,7 +48,7 @@ cryptocurrency-volatility-prediction/
 
  >README.md
 
-## 📌 Key Takeaways
+## Key Takeaways
 - Volatility in crypto markets shows strong temporal clustering
 - GARCH models outperform baselines in short-term volatility forecasting
 - LSTM models show potential for capturing complex nonlinear patterns
