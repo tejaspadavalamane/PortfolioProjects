@@ -54,7 +54,7 @@ cryptocurrency-volatility-prediction/
 - LSTM models show potential for capturing complex nonlinear patterns
 - Analytical results inform data-backed crypto trading strategies
 
-## 👨‍💻 Tech Stack
+## Tech Stack
 - **Languages**: Python
 - **Libraries**: Pandas, NumPy, Matplotlib, Seaborn, `statsmodels`, TensorFlow/Keras
 - **Tools**: Jupyter Notebook, Git/GitHub
