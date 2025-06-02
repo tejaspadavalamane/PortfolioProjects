@@ -2,11 +2,11 @@
 
 This project showcases the implementation of a **Modern Data Warehouse (MDW)** using **Microsoft Fabric**, following the **Medallion Architecture** principles (Bronze, Silver, Gold). It demonstrates how raw data is ingested, processed, and visualized using Microsoft's modern analytics stack.
 
-## 📌 Project Overview
+## Project Overview
 
 This project involves designing a modular and scalable data architecture for handling diverse sales-related datasets. The pipeline transforms raw data into actionable insights through layered processing and powerful reporting tools.
 
-### 🛠 Tools & Technologies
+### Tools & Technologies
 
 - **Microsoft Fabric**
   - Lakehouse
@@ -20,7 +20,7 @@ This project involves designing a modular and scalable data architecture for han
 
 ---
 
-## 🧱 Medallion Architecture
+## Medallion Architecture
 
 The project follows a three-layered data architecture:
 
@@ -30,14 +30,14 @@ The project follows a three-layered data architecture:
 
 ---
 
-## 📂 Data Sources
+## Data Sources
 
 - `Sales_01.xlsx`, `Sales_02.xlsx`, `Sales_03.xlsx`: Sales and transaction data
 - `Customer`, `Product`, `Ship Mode`, `Order Priority`, `Return`: Additional customer and order metadata
 
 ---
 
-## 📊 Dashboard
+## Dashboard
 
 A Power BI dashboard was built to provide insights including:
 
@@ -46,11 +46,11 @@ A Power BI dashboard was built to provide insights including:
 - Customer segmentation
 - Return and shipping performance
 
-### 📄 Power BI Report: `Tejas.pbix`
+### Power BI Report: `Tejas.pbix`
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 modern-data-warehouse/
@@ -72,7 +72,7 @@ modern-data-warehouse/
 
 ---
 
-## 📥 How to Use
+## How to Use
 
 1. Load the `.xlsx` files into Microsoft Fabric’s Lakehouse.
 2. Use Notebooks and Pipelines to process data through Bronze → Silver → Gold layers.
@@ -81,7 +81,7 @@ modern-data-warehouse/
 
 ---
 
-## 📘 Author
+## Author
 
 **Tejas Padavalamane**  
 Master’s in IT and Management – Data Analytics and Management  
